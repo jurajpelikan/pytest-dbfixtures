@@ -76,7 +76,7 @@ def elasticsearch_proc(host='127.0.0.1', port=9201, cluster_name=None,
             {deamon} -p {pidfile} --http.port={port}
             --path.home={home_path}  --default.path.logs={logs_path}
             --default.path.work={work_path}
-            --default.path.conf=/etc/elasticsearch
+            --default.path.conf={conf_path}
             --cluster.name={cluster}
             --network.publish_host='{network_publish_host}'
             --discovery.zen.ping.multicast.enabled={multicast_enabled}
@@ -86,6 +86,7 @@ def elasticsearch_proc(host='127.0.0.1', port=9201, cluster_name=None,
             pidfile=pidfile,
             port=elasticsearch_port,
             home_path=home_path,
+            conf_path=config.elasticsearch.conf_path,
             logs_path=logs_path,
             work_path=work_path,
             cluster=cluster,
@@ -124,7 +125,6 @@ def elasticsearch(process_fixture_name):
     @pytest.fixture
     def elasticsearch_fixture(request):
         """Elasticsearch client fixture."""
-
         proc_fixture = get_process_fixture(request, process_fixture_name)
 
         hosts = '%s:%s' % (proc_fixture.host, proc_fixture.port)
